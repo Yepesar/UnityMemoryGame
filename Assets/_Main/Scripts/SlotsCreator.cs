@@ -20,11 +20,10 @@ public class SlotsCreator : MonoBehaviour
     private List<GameObject> createdSlots = new List<GameObject>();
     private GridLayoutGroup gridLayoutGroup;
 
-    private UISlot validationPairA = null;
-    private UISlot validationPairB = null;
-    private IEnumerator pairCheckCoroutine = null;
+    public List<GameObject> CreatedSlots { get => createdSlots;}
+    public int Pairs { get => pairs;}
 
-    private void Start()
+    private void Awake()
     {
         // Validate and initialize the Grid Layout Group
         gridLayoutGroup = slotsParent.GetComponent<GridLayoutGroup>();
@@ -32,8 +31,14 @@ public class SlotsCreator : MonoBehaviour
         {
             Debug.LogError("The parent object must have a Grid Layout Group component.");
             return;
-        }
+        }    
+    }
 
+    /// <summary>
+    /// Initialize the generator and create the slots
+    /// </summary>
+    public void InitGenerator()
+    {
         ConfigureGridLayout();
         CreateSlots();
         AssignSlotData();
@@ -84,6 +89,11 @@ public class SlotsCreator : MonoBehaviour
         if (pairs > totalSlots / 2)
         {
             Debug.LogWarning($"Number of pairs ({pairs}) exceeds available slots. Adjusted to {totalSlots / 2}.");
+            pairs = totalSlots / 2;
+        }
+        else
+        {
+            pairs = totalPairs;
         }
 
         List<SO_SlotData> assignedSlotData = new List<SO_SlotData>();
@@ -105,8 +115,7 @@ public class SlotsCreator : MonoBehaviour
             UISlot uiSlot = createdSlots[i].GetComponent<UISlot>();
             if (uiSlot != null)
             {
-                uiSlot.SetSlotData(assignedSlotData[i]);
-                uiSlot.OnSlotSelected += () => ValidatePair(uiSlot); // Subscribe to slot selection
+                uiSlot.SetSlotData(assignedSlotData[i]);              
             }
         }
     }
@@ -123,51 +132,5 @@ public class SlotsCreator : MonoBehaviour
             list[i] = list[randomIndex];
             list[randomIndex] = temp;
         }
-    }
-
-    /// <summary>
-    /// Validates if two selected slots form a pair.
-    /// </summary>
-    public void ValidatePair(UISlot slot)
-    {
-        if (validationPairA == null)
-        {
-            validationPairA = slot;
-        }
-        else if (validationPairB == null)
-        {
-            validationPairB = slot;
-        }
-
-        if (validationPairA != null && validationPairB != null && pairCheckCoroutine == null)
-        {
-            pairCheckCoroutine = ComparingSystem();
-            StartCoroutine(pairCheckCoroutine);
-        }
-    }
-
-    /// <summary>
-    /// Coroutine to compare two selected slots.
-    /// </summary>
-    private IEnumerator ComparingSystem()
-    {
-        if (validationPairA.GetSlotData() == validationPairB.GetSlotData())
-        {
-            Debug.Log("Match found!");
-            validationPairA.Lock();
-            validationPairB.Lock();
-        }
-        else
-        {
-            yield return new WaitForSeconds(0.5f);
-
-            validationPairA.UnRevealSlot();
-            validationPairB.UnRevealSlot();
-            Debug.Log("Not a match!");
-        }
-
-        validationPairA = null;
-        validationPairB = null;
-        pairCheckCoroutine = null;
     }
 }

@@ -12,14 +12,16 @@ public class UISlot : MonoBehaviour
     [SerializeField] private Image slotImage; // Background image of the slot
     [SerializeField] private Image slotIconImage; // Icon image to show slot data
 
-    public Action OnSlotSelected; // Event triggered when the slot is selected
+    private bool isLocked = false;
+
+    public bool IsLocked {get => isLocked;}
 
     private void Start()
     {
         // Assign the button's click event
         slotButton.onClick.AddListener(HandleSlotClick);
     }
-
+   
     /// <summary>
     /// Handles the click event on the slot button.
     /// Toggles between revealing and unrevealing the slot.
@@ -43,6 +45,7 @@ public class UISlot : MonoBehaviour
     {
         slotButton.interactable = false;
         slotSelection.gameObject.SetActive(false);
+        isLocked = true;
     }
 
     /// <summary>
@@ -58,7 +61,7 @@ public class UISlot : MonoBehaviour
         slotIconImage.sprite = slotData != null ? slotData.SlotIcon : null;
 
         // Invoke the OnSlotSelected event
-        OnSlotSelected?.Invoke();
+        GameManager.Singleton?.ValidatePair(this);
     }
 
     /// <summary>
