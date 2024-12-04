@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class SlotsCreator : MonoBehaviour
 {
+    #region Variables
+
     [SerializeField] private SO_BlocksData blockData; // Reference to block data
 
     [Range(2, 8)]
@@ -23,6 +25,10 @@ public class SlotsCreator : MonoBehaviour
 
     public List<GameObject> CreatedSlots => createdSlots;
     public int Pairs => pairs;
+
+    #endregion
+
+    #region Initialization
 
     private void Awake()
     {
@@ -62,8 +68,12 @@ public class SlotsCreator : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Slot Creation and Assignment
+
     /// <summary>
-    /// Initialize the generator and create the slots
+    /// Initialize the generator and create the slots.
     /// </summary>
     public void InitGenerator()
     {
@@ -162,6 +172,14 @@ public class SlotsCreator : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Utility Methods
+
+    /// <summary>
+    /// Calculates the total damage from all slots.
+    /// </summary>
+    /// <returns>Total damage divided by 2.</returns>
     public float GetSlotsTotalDamage()
     {
         float totalDamage = 0;
@@ -176,4 +194,6 @@ public class SlotsCreator : MonoBehaviour
 
         return totalDamage / 2;
     }
+
+    #endregion
 }

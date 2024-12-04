@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,10 +17,19 @@ public enum VFXTypes
 
 public class VFXManager : MonoBehaviour
 {
+    #region Variables
+
     public static VFXManager Singleton;
 
-    [SerializeField] private List<VFXProfile> vfxProfiles; // List of VFX profiles
+    [SerializeField] private List<VFXProfile> vfxProfiles; // List of VFX profiles containing prefabs and types
 
+    #endregion
+
+    #region Initialization
+
+    /// <summary>
+    /// Ensures only one instance of VFXManager exists (Singleton pattern).
+    /// </summary>
     private void Awake()
     {
         if (Singleton == null)
@@ -33,6 +41,10 @@ public class VFXManager : MonoBehaviour
             Destroy(this);
         }
     }
+
+    #endregion
+
+    #region Public Methods
 
     /// <summary>
     /// Spawns a VFX at the given transform's position and rotation.
@@ -65,12 +77,18 @@ public class VFXManager : MonoBehaviour
         // Instantiate the VFX at the desired position and rotation
         Instantiate(selectedProfile.VFXPrefab, spawnTransform.position, spawnTransform.rotation);
     }
+
+    #endregion
 }
 
 [System.Serializable]
 public class VFXProfile
 {
+    #region Variables
+
     public string VFXName; // Name of the VFX (for identification purposes)
     public VFXTypes VFXType; // Type of the VFX
     public GameObject VFXPrefab; // Prefab to spawn
+
+    #endregion
 }

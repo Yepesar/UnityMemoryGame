@@ -5,10 +5,12 @@ using UnityEngine.UI;
 
 public class FillBar : MonoBehaviour
 {
+    #region Variables
+
     [SerializeField] private Image fillBarImage; // The fill image for the bar
     [SerializeField] private TextMeshProUGUI barText; // The text display on the bar
-    [SerializeField] private bool barCharge = false;
-    [SerializeField] private string chargingMessage = string.Empty;
+    [SerializeField] private bool barCharge = false; // Determines if the bar is a charging bar
+    [SerializeField] private string chargingMessage = string.Empty; // Message to display when charging
 
     private float maxBarValue = 0; // Maximum value of the bar
     private float actualBarValue = 0; // Current value of the bar
@@ -16,24 +18,32 @@ public class FillBar : MonoBehaviour
     public UnityEvent onBarReachesZero; // Event triggered when the bar reaches zero
     public UnityEvent onBarReachesMax; // Event triggered when the bar reaches maximum
 
+    #endregion
+
+    #region Public Methods
+
     /// <summary>
     /// Initializes the bar with a maximum value. Optionally sets it as a life bar.
     /// </summary>
+    /// <param name="maxValue">Maximum value of the bar.</param>
+    /// <param name="isLifeBar">True if the bar is a life bar, false if it's a charging bar.</param>
     public void InitBar(float maxValue, bool isLifeBar = true)
     {
         maxBarValue = maxValue;
 
         if (isLifeBar)
         {
-            actualBarValue = maxValue;           
+            actualBarValue = maxValue;
         }
 
-        UpdateBar(0,true);
+        UpdateBar(0, true);
     }
 
     /// <summary>
     /// Updates the bar based on the given value. Supports both damage and charge functionality.
     /// </summary>
+    /// <param name="value">The value to update the bar with.</param>
+    /// <param name="isDamage">True if the value represents damage, false if it represents a charge.</param>
     public void UpdateBar(float value, bool isDamage = true)
     {
         if (isDamage)
@@ -51,7 +61,7 @@ public class FillBar : MonoBehaviour
         else
         {
             actualBarValue += value;
-           
+
             if (actualBarValue >= maxBarValue)
             {
                 actualBarValue = 0;
@@ -67,6 +77,10 @@ public class FillBar : MonoBehaviour
         UpdateBarScale();
     }
 
+    #endregion
+
+    #region Private Methods
+
     /// <summary>
     /// Updates the scale of the fill bar to match the current bar value.
     /// Ensures the scale is clamped between 0 and 1.
@@ -77,6 +91,8 @@ public class FillBar : MonoBehaviour
         float normalizedValue = Mathf.Clamp01(actualBarValue / maxBarValue);
 
         // Update the fill bar's scale
-        fillBarImage.transform.localScale = new Vector3(normalizedValue, 1, 1);      
+        fillBarImage.transform.localScale = new Vector3(normalizedValue, 1, 1);
     }
+
+    #endregion
 }

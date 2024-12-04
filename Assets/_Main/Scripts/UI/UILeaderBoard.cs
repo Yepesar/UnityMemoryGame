@@ -4,19 +4,34 @@ using UnityEngine;
 
 public class UILeaderBoard : MonoBehaviour
 {
-    private readonly string folderPath = "Assets/_Main/JSONs/GameResults";
+    #region Variables
 
-    [SerializeField] private Transform playersParent;
-    [SerializeField] private GameObject leaderBoardPlayerPrefab;
+    private readonly string folderPath = "Assets/_Main/JSONs/GameResults"; // Path to the folder containing JSON files
+
+    [SerializeField] private Transform playersParent; // Parent transform for the leaderboard entries
+    [SerializeField] private GameObject leaderBoardPlayerPrefab; // Prefab for individual leaderboard entries
     [Range(1, 6)]
-    [SerializeField] private int maxPlayers = 6;
+    [SerializeField] private int maxPlayers = 6; // Maximum number of players to display
 
-    // Start is called before the first frame update
-    void Start()
+    #endregion
+
+    #region Initialization
+
+    /// <summary>
+    /// Populates the leaderboard when the script starts.
+    /// </summary>
+    private void Start()
     {
         PopulateLeaderboard();
     }
 
+    #endregion
+
+    #region Leaderboard Population
+
+    /// <summary>
+    /// Populates the leaderboard UI by reading and sorting JSON files.
+    /// </summary>
     private void PopulateLeaderboard()
     {
         // Ensure the folder exists
@@ -77,12 +92,13 @@ public class UILeaderBoard : MonoBehaviour
             }
         }
     }
+
+    #endregion
 }
 
 [System.Serializable]
 public class LeaderboardEntry
 {
-    public string PlayerName;
-    public int Score;
+    public string PlayerName; // Name of the player
+    public int Score; // Player's score
 }
-
