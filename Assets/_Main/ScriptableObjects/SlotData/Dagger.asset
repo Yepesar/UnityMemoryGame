@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SlotName: Fire
   SlotIcon: {fileID: 1334085379, guid: bf1ccd578f309e64da1f8801a83067b0, type: 3}
-  SlotDamage: 1
+  SlotDamage: 2

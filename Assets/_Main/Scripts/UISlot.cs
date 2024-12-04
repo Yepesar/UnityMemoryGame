@@ -53,6 +53,15 @@ public class UISlot : MonoBehaviour
     /// </summary>
     public void RevealSlot()
     {
+        if (slotData == null) //Empty Slot
+        {
+            slotSelection.gameObject.SetActive(false);
+            slotIconImage.gameObject.SetActive(false);
+            slotImage.sprite = coverSlotSprite;
+            slotButton.interactable = false;
+            return;
+        }
+
         slotSelection.gameObject.SetActive(true);
         slotIconImage.gameObject.SetActive(true);
         slotImage.sprite = uncoverSlotSprite;
@@ -68,7 +77,7 @@ public class UISlot : MonoBehaviour
     /// Hides the slot's content, resetting it to the covered state.
     /// </summary>
     public void UnRevealSlot()
-    {
+    {       
         slotSelection.gameObject.SetActive(false);
         slotIconImage.gameObject.SetActive(false);
         slotImage.sprite = coverSlotSprite;

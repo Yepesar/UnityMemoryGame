@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SlotName: Explotion
   SlotIcon: {fileID: 524296679, guid: bf1ccd578f309e64da1f8801a83067b0, type: 3}
-  SlotDamage: 1
+  SlotDamage: 5

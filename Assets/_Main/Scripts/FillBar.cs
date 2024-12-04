@@ -10,8 +10,8 @@ public class FillBar : MonoBehaviour
     [SerializeField] private bool barCharge = false;
     [SerializeField] private string chargingMessage = string.Empty;
 
-    private int maxBarValue = 0; // Maximum value of the bar
-    private int actualBarValue = 0; // Current value of the bar
+    private float maxBarValue = 0; // Maximum value of the bar
+    private float actualBarValue = 0; // Current value of the bar
 
     public UnityEvent onBarReachesZero; // Event triggered when the bar reaches zero
     public UnityEvent onBarReachesMax; // Event triggered when the bar reaches maximum
@@ -19,7 +19,7 @@ public class FillBar : MonoBehaviour
     /// <summary>
     /// Initializes the bar with a maximum value. Optionally sets it as a life bar.
     /// </summary>
-    public void InitBar(int maxValue, bool isLifeBar = true)
+    public void InitBar(float maxValue, bool isLifeBar = true)
     {
         maxBarValue = maxValue;
 
@@ -27,12 +27,14 @@ public class FillBar : MonoBehaviour
         {
             actualBarValue = maxValue;           
         }
+
+        UpdateBar(0,true);
     }
 
     /// <summary>
     /// Updates the bar based on the given value. Supports both damage and charge functionality.
     /// </summary>
-    public void UpdateBar(int value, bool isDamage = true)
+    public void UpdateBar(float value, bool isDamage = true)
     {
         if (isDamage)
         {
@@ -52,7 +54,7 @@ public class FillBar : MonoBehaviour
            
             if (actualBarValue >= maxBarValue)
             {
-                actualBarValue = maxBarValue;
+                actualBarValue = 0;
                 onBarReachesMax?.Invoke();
             }
 
@@ -72,11 +74,9 @@ public class FillBar : MonoBehaviour
     private void UpdateBarScale()
     {
         // Clamp the actual value between 0 and maxBarValue
-        float normalizedValue = Mathf.Clamp01((float)actualBarValue / maxBarValue);
+        float normalizedValue = Mathf.Clamp01(actualBarValue / maxBarValue);
 
         // Update the fill bar's scale
-        fillBarImage.transform.localScale = new Vector3(normalizedValue, 1, 1);
-
-        
+        fillBarImage.transform.localScale = new Vector3(normalizedValue, 1, 1);      
     }
 }
