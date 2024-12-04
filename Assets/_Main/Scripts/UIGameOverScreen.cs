@@ -7,8 +7,7 @@ using UnityEngine.UI;
 public class UIGameOverScreen : MonoBehaviour
 {
     [SerializeField] private SO_PlayerData playerData;
-    [SerializeField] private GameObject contentGameObject;
-    [SerializeField] private TextMeshProUGUI resultTitleText;
+    [SerializeField] private GameObject contentGameObject;  
     [SerializeField] private TextMeshProUGUI totalClicksText;
     [SerializeField] private TextMeshProUGUI totalTimeText;
     [SerializeField] private TextMeshProUGUI pairsText;
@@ -18,7 +17,6 @@ public class UIGameOverScreen : MonoBehaviour
     {
         contentGameObject.gameObject.SetActive(true);
 
-        resultTitleText.text = "Game Over";
         totalClicksText.text = "Total Clicks: " + playerData.PlayerGameResults.TotalClicks;
         totalTimeText.text = "Total Time: " + playerData.PlayerGameResults.TotalGameTime;
         pairsText.text = "Pairs: " + playerData.PlayerGameResults.TotalFindPairs;

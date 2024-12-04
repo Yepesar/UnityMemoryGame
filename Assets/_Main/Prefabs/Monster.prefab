@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 2914197588733796822}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.93, y: -0.46, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -49,6 +49,7 @@ MonoBehaviour:
   monsterName: EVIL Monster
   monsterNameText: {fileID: 6227713949655905416}
   monsterRenderer: {fileID: 6829659090530474782}
+  deadVFX: {fileID: 3982349990686654958, guid: f8e61ec6f976adb41b818a856dd49c64, type: 3}
   lifeBar: {fileID: 757028363040505998}
   attackBar: {fileID: 6179966393046689844}
   maxLife: 25

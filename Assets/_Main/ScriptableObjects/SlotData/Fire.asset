@@ -15,3 +15,4 @@ MonoBehaviour:
   SlotName: Fire
   SlotIcon: {fileID: -471716517, guid: bf1ccd578f309e64da1f8801a83067b0, type: 3}
   SlotDamage: 4
+  VFXType: 2

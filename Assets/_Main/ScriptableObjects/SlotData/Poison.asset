@@ -15,3 +15,4 @@ MonoBehaviour:
   SlotName: Poison
   SlotIcon: {fileID: 1871209593, guid: bf1ccd578f309e64da1f8801a83067b0, type: 3}
   SlotDamage: 8
+  VFXType: 6

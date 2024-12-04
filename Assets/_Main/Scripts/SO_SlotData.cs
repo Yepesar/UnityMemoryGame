@@ -12,4 +12,6 @@ public class SO_SlotData : ScriptableObject
     [Header("Gameplay")]
     [Range(1, 100)]
     public int SlotDamage = 1; // Damage value associated with this slot
+
+    public VFXTypes VFXType;
 }

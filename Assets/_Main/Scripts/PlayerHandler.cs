@@ -17,8 +17,11 @@ public class PlayerHandler : MonoBehaviour
 
     public void Attack(SO_SlotData data)
     {
-        Debug.Log("Attacking with " + data.SlotName + " , " + data.SlotDamage + " of Damage!");
-        GameManager.Singleton.AttackMonster(data.SlotDamage);
+        if (data)
+        {
+            Debug.Log("Attacking with " + data.SlotName + " , " + data.SlotDamage + " of Damage!");
+            GameManager.Singleton.AttackMonster(data.SlotDamage, data.VFXType);
+        }      
     }
 
     public void RecieveDamage(float amount)

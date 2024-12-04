@@ -59,15 +59,16 @@ public class UISlot : MonoBehaviour
             slotIconImage.gameObject.SetActive(false);
             slotImage.sprite = coverSlotSprite;
             slotButton.interactable = false;
-            return;
         }
+        else
+        {
+            slotSelection.gameObject.SetActive(true);
+            slotIconImage.gameObject.SetActive(true);
+            slotImage.sprite = uncoverSlotSprite;
 
-        slotSelection.gameObject.SetActive(true);
-        slotIconImage.gameObject.SetActive(true);
-        slotImage.sprite = uncoverSlotSprite;
-
-        // Assign the slot data's icon if available
-        slotIconImage.sprite = slotData != null ? slotData.SlotIcon : null;
+            // Assign the slot data's icon if available
+            slotIconImage.sprite = slotData != null ? slotData.SlotIcon : null;
+        }
 
         // Invoke the OnSlotSelected event
         GameManager.Singleton?.ValidatePair(this);

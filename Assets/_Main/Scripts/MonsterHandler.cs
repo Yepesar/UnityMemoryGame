@@ -8,6 +8,7 @@ public class MonsterHandler : MonoBehaviour
     [SerializeField] private string monsterName = "EVIL Monster";
     [SerializeField] private TextMeshProUGUI monsterNameText;
     [SerializeField] private SpriteRenderer monsterRenderer;
+    [SerializeField] private GameObject deadVFX;
 
     [SerializeField] private FillBar lifeBar;
     [SerializeField] private FillBar attackBar;
@@ -78,6 +79,9 @@ public class MonsterHandler : MonoBehaviour
 
     private void Die()
     {
+        GameObject vfx = Instantiate(deadVFX,transform);
+        vfx.transform.parent = null;
+
         LifeBar.onBarReachesZero.RemoveListener(Die);
         gameObject.SetActive(false);
     }

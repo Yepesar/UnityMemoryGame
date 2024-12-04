@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform monsterParent;
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private float revealTime = 0.25f;
+    [SerializeField] private float gameOverDelay = 1.0f;
 
     private MonsterHandler actualMonster;
 
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
     private int actualPairs = 0;
     private int totalClicks = 0;
     private float gameElapsedTime = 0f;
+    
 
     private void Awake()
     {
@@ -53,6 +55,13 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        StartCoroutine(GameOverSystem());
+    }
+
+    private IEnumerator GameOverSystem()
+    {
+        yield return new WaitForSeconds(gameOverDelay);
+        
         StopAllCoroutines();
         actualMonster.gameObject.SetActive(false);
         SavePlayerData();
@@ -60,6 +69,7 @@ public class GameManager : MonoBehaviour
 
         onGameOver?.Invoke();
     }
+
 
     /// <summary>
     /// Check if the player unreveal all the pairs
@@ -88,7 +98,7 @@ public class GameManager : MonoBehaviour
         {
             validationPairB = slot;
         }
-
+        
         if (validationPairA != null && validationPairB != null && pairCheckCoroutine == null)
         {
             pairCheckCoroutine = ComparingSystem();
@@ -101,17 +111,20 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private IEnumerator ComparingSystem()
     {
-        if (validationPairA.GetSlotData() == validationPairB.GetSlotData())
+        bool datNull = validationPairA.GetSlotData() == null && validationPairB.GetSlotData() == null;
+        bool match = validationPairA.GetSlotData() == validationPairB.GetSlotData();
+
+        if (!datNull && match)
         {
             Debug.Log("Match found!");
-            
+
             validationPairA.Lock();
             validationPairB.Lock();
-            
+
             actualPairs++;
             Debug.Log("Founded Pairs: " + actualPairs);
             ValidateAllPairs();
-             
+
             onPairHit?.Invoke(validationPairA.GetSlotData());
         }
         else
@@ -134,8 +147,9 @@ public class GameManager : MonoBehaviour
         player.RecieveDamage(damage);
     }
 
-    public void AttackMonster(float damage)
+    public void AttackMonster(float damage, VFXTypes vFXType = VFXTypes.None)
     {
+        VFXManager.Singleton.SpawnVFX(vFXType, actualMonster.transform);
         actualMonster.ReciebeDamage(damage);
     }
 
@@ -178,7 +192,7 @@ public class GameManager : MonoBehaviour
         playerData.PlayerGameResults.TotalClicks = totalClicks;
         playerData.PlayerGameResults.TotalGameTime = Mathf.FloorToInt(gameElapsedTime % 60);
         playerData.PlayerGameResults.TotalFindPairs = actualPairs;
-        //playerData.PlayerGameResults.Score = 100;
+        playerData.CalculateScore();
     }
 
 }
