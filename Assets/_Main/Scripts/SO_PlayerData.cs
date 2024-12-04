@@ -13,6 +13,12 @@ public class SO_PlayerData : ScriptableObject
         PlayerGameResults = new GameResults();
     }
 
+    public void SetNewPlayerName(string newPlayerName)
+    {
+        ResetResults();
+        PlayerName = newPlayerName;
+    }
+
 }
 
 [System.Serializable]

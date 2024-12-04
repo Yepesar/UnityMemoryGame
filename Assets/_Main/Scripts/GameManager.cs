@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Gradient monsterColors;
     [SerializeField] private Transform monsterParent;
     [SerializeField] private TextMeshProUGUI timerText;
+    [SerializeField] private float revealTime = 0.25f;
 
     private MonsterHandler actualMonster;
 
@@ -115,7 +116,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(revealTime);
 
             validationPairA.UnRevealSlot();
             validationPairB.UnRevealSlot();

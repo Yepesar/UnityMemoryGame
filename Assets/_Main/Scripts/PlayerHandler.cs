@@ -30,5 +30,6 @@ public class PlayerHandler : MonoBehaviour
     {
         Debug.Log("RIP player dead");
         lifeBar.onBarReachesZero.RemoveListener(Die);
+        GameManager.Singleton.GameOver();
     }
 }
