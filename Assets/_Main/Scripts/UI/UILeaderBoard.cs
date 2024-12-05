@@ -6,12 +6,13 @@ public class UILeaderBoard : MonoBehaviour
 {
     #region Variables
 
-    private readonly string folderPath = "Assets/_Main/JSONs/GameResults"; // Path to the folder containing JSON files
-
+    [SerializeField] private string jsonFolderName = "GameResults"; // Subfolder name for JSON files inside StreamingAssets
     [SerializeField] private Transform playersParent; // Parent transform for the leaderboard entries
     [SerializeField] private GameObject leaderBoardPlayerPrefab; // Prefab for individual leaderboard entries
     [Range(1, 6)]
     [SerializeField] private int maxPlayers = 6; // Maximum number of players to display
+
+    private string fullPath; // Full path to the JSON folder
 
     #endregion
 
@@ -22,6 +23,9 @@ public class UILeaderBoard : MonoBehaviour
     /// </summary>
     private void Start()
     {
+        // Determine the full path based on the runtime environment
+        fullPath = Path.Combine(Application.streamingAssetsPath, jsonFolderName);
+
         PopulateLeaderboard();
     }
 
@@ -35,14 +39,14 @@ public class UILeaderBoard : MonoBehaviour
     private void PopulateLeaderboard()
     {
         // Ensure the folder exists
-        if (!Directory.Exists(folderPath))
+        if (!Directory.Exists(fullPath))
         {
-            Debug.LogError($"Folder not found: {folderPath}");
+            Debug.LogError($"Folder not found: {fullPath}");
             return;
         }
 
         // Get all JSON files in the folder
-        string[] jsonFiles = Directory.GetFiles(folderPath, "*.json");
+        string[] jsonFiles = Directory.GetFiles(fullPath, "*.json");
         if (jsonFiles.Length == 0)
         {
             Debug.LogWarning("No JSON files found in the folder.");
@@ -72,7 +76,7 @@ public class UILeaderBoard : MonoBehaviour
             leaderboardEntries.Add(new LeaderboardEntry
             {
                 PlayerName = playerName,
-                Score = result.results.score
+                Score = result.results.score,
             });
         }
 
@@ -102,3 +106,5 @@ public class LeaderboardEntry
     public string PlayerName; // Name of the player
     public int Score; // Player's score
 }
+
+

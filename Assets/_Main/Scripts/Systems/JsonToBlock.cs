@@ -1,14 +1,15 @@
 using System.Collections.Generic;
 using System.IO;
-using UnityEditor;
 using UnityEngine;
 
 public class JsonToBlock : MonoBehaviour
 {
     #region Variables
 
-    [SerializeField] private string jsonFolderPath = "Assets/_Main/JSONs/Blocks"; // Folder path for JSON files
+    [SerializeField] private string jsonFolderPath = "Blocks"; // Subfolder inside StreamingAssets for JSON files
     [SerializeField] private SO_BlocksData blocksDataAsset; // Reference to the ScriptableObject to update
+
+    private string fullPath; // Full path to the JSON folder
 
     #endregion
 
@@ -19,6 +20,10 @@ public class JsonToBlock : MonoBehaviour
     /// </summary>
     private void Awake()
     {
+        // Ensure the folder path is relative to StreamingAssets
+        fullPath = Path.Combine(Application.streamingAssetsPath, jsonFolderPath);     
+        Debug.Log($"Looking for JSON files in: {fullPath}");
+
         ProcessRandomJson();
     }
 
@@ -32,14 +37,14 @@ public class JsonToBlock : MonoBehaviour
     public void ProcessRandomJson()
     {
         // Ensure the folder exists
-        if (!Directory.Exists(jsonFolderPath))
+        if (!Directory.Exists(fullPath))
         {
-            Debug.LogError($"Folder not found: {jsonFolderPath}");
+            Debug.LogError($"Folder not found: {fullPath}");
             return;
         }
 
         // Get all JSON files in the folder
-        string[] jsonFiles = Directory.GetFiles(jsonFolderPath, "*.json");
+        string[] jsonFiles = Directory.GetFiles(fullPath, "*.json");
         if (jsonFiles.Length == 0)
         {
             Debug.LogWarning("No JSON files found in the folder.");
@@ -79,12 +84,6 @@ public class JsonToBlock : MonoBehaviour
         {
             blocksDataAsset.Blocks.Clear();
             blocksDataAsset.Blocks.AddRange(blocks);
-
-            // Save changes to the ScriptableObject in the editor
-#if UNITY_EDITOR
-            EditorUtility.SetDirty(blocksDataAsset);
-            AssetDatabase.SaveAssets();
-#endif
 
             Debug.Log("ScriptableObject updated with new data!");
         }

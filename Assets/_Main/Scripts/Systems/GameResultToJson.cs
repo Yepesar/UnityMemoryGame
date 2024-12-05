@@ -7,7 +7,25 @@ public class GameResultToJson : MonoBehaviour
 
     [SerializeField] private SO_PlayerData playerData; // Reference to SO_PlayerData
 
-    private readonly string folderPath = "Assets/_Main/JSONs/GameResults"; // Path to save the JSON files
+    private readonly string jsonFolderName = "GameResults"; // Subfolder name for storing JSON files
+    private string folderPath; // Full path to save the JSON files
+
+    #endregion
+
+    #region Initialization
+
+    private void Awake()
+    {
+        // Use StreamingAssets path for storing game results
+        folderPath = Path.Combine(Application.streamingAssetsPath, jsonFolderName);
+
+        // Ensure the folder exists
+        if (!Directory.Exists(folderPath))
+        {
+            Directory.CreateDirectory(folderPath);
+            Debug.Log($"Created folder at: {folderPath}");
+        }
+    }
 
     #endregion
 
@@ -22,12 +40,6 @@ public class GameResultToJson : MonoBehaviour
         {
             Debug.LogError("Player data reference is null. Cannot save results.");
             return;
-        }
-
-        // Ensure the folder exists
-        if (!Directory.Exists(folderPath))
-        {
-            Directory.CreateDirectory(folderPath);
         }
 
         // Prepare the results object for JSON serialization

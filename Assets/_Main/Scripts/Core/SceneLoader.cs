@@ -82,5 +82,10 @@ public class SceneLoader : MonoBehaviour
         loadCoroutine = null;
     }
 
+    public void CloseGame()
+    {
+        Application.Quit();
+    }
+
     #endregion
 }

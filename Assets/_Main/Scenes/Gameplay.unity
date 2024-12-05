@@ -2704,7 +2704,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc04759d072f8734bb7fa4b01c77abd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jsonFolderPath: Assets/_Main/JSONs/Blocks
+  jsonFolderPath: Blocks
   blocksDataAsset: {fileID: 11400000, guid: 85ddc7d8cc6e6664eb83170cc05fdec8, type: 2}
 --- !u!114 &1988774738
 MonoBehaviour:

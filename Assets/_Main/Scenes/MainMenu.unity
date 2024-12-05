@@ -406,6 +406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90e51044b9c1d9441839dd28a5f87646, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jsonFolderName: GameResults
   playersParent: {fileID: 884326168}
   leaderBoardPlayerPrefab: {fileID: 2430321290647893310, guid: 2bf05f516b8724541b2a54606fc85ba6, type: 3}
   maxPlayers: 6
@@ -627,7 +628,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 614549541}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 231622756}
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: CloseGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &614549541
 MonoBehaviour:
   m_ObjectHideFlags: 0
